@@ -3,8 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class
-  switch extends Model {
+  class keyswitch extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  switch.init({
+  keyswitch.init({
     name: DataTypes.STRING,
     mount: DataTypes.STRING,
     type: DataTypes.STRING,
@@ -34,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     is_active: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'switch',
+    modelName: 'keyswitch',
   });
-  return switch;
+  return keyswitch;
 };

@@ -6,4 +6,8 @@ route.get("/api", (req, res) => {
   });
 });
 
+const userRoute = require("./user_route");
+
+route.use("/api/users", userRoute);
+
 module.exports = route;
