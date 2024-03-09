@@ -10,4 +10,10 @@ const userRoute = require("./user_route");
 
 route.use("/api/users", userRoute);
 
+
+// ==== Admin Route ====
+const adminUserRoute = require("./admin/user_route");
+
+route.use("/api/admin/user", adminUserRoute);
+
 module.exports = route;
