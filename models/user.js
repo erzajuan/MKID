@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate: function (user, options) {
-          console.log("Enkripsi");
           user.password = encrypt(user.password);
           user.role = "user";
           user.is_active = true;

@@ -1,7 +1,7 @@
-function successResponse(statusCode, message, data) {
+function successResponse(message, data) {
   return {
     meta: {
-      code: statusCode,
+      code: 200,
       status: "Success",
       message: message,
     },
@@ -53,10 +53,39 @@ function invalidResponse(message) {
   };
 }
 
+function tokenResponse(message, token) {
+  return {
+    meta: {
+      code: 200,
+      status: "Success",
+      message: message,
+    },
+    data: {
+      access_token: token,
+      token_type: "Bearer",
+      expires_in: 3600
+    }
+  };
+}
+
+function invalidTokenResponse(message) {
+  return {
+    meta: {
+      code: 401,
+      status: "Unauthorized",
+      message: message,
+    },
+    data: null
+  };
+}
+
+
 module.exports = {
   successResponse,
   errorResponse,
   conflictResponse,
   invalidResponse,
-  createResponse
+  createResponse,
+  tokenResponse,
+  invalidTokenResponse
 };
