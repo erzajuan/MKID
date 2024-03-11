@@ -45,7 +45,7 @@ class userController {
       if (checkUsername) {
         res.status(409).json(conflictResponse("Username sudah digunakan"));
       } else if (checkEmail) {
-        res.status(409).json(conflictResponse("E-mail number sudah digunakan"));
+        res.status(409).json(conflictResponse("E-mail sudah digunakan"));
       } else if (checkPhoneNumber) {
         res.status(409).json(conflictResponse("Phone number sudah digunakan"));
       } else {
