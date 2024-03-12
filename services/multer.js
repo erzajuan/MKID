@@ -12,7 +12,7 @@ const diskStorage = multer.diskStorage({
 const multerImageProfile = multer({
   storage: diskStorage,
 }).single("img_profile");
-let multerRegister = (req, res, next) => {
+let multerUser = (req, res, next) => {
   multerImageProfile(req, res, function (err) {
     if (err) {
       return next(err);
@@ -30,4 +30,4 @@ let multerRegister = (req, res, next) => {
 
 
 
-module.exports = { multerRegister };
+module.exports = { multerUser };
