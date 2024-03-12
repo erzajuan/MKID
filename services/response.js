@@ -9,17 +9,6 @@ function successResponse(message, data) {
   };
 }
 
-function errorResponse(message) {
-  return {
-    meta: {
-      code: 500,
-      status: "Error",
-      message: message,
-    },
-    data: null,
-  };
-}
-
 function createResponse(message, data) {
   return {
     meta: {
@@ -31,11 +20,11 @@ function createResponse(message, data) {
   };
 }
 
-function conflictResponse(message) {
+function noContentResponse(message) {
   return {
     meta: {
-      code: 409,
-      status: "Conflict",
+      code: 204,
+      status: "No Content",
       message: message,
     },
     data: null,
@@ -53,6 +42,40 @@ function invalidResponse(message) {
   };
 }
 
+function notFoundResponse(message) {
+  return {
+    meta: {
+      code: 404,
+      status: "Not Found",
+      message: message,
+    },
+    data: null,
+  };
+}
+
+function conflictResponse(message) {
+  return {
+    meta: {
+      code: 409,
+      status: "Conflict",
+      message: message,
+    },
+    data: null,
+  };
+}
+
+function errorResponse(message) {
+  return {
+    meta: {
+      code: 500,
+      status: "Error",
+      message: message,
+    },
+    data: null,
+  };
+}
+
+// AUTH
 function tokenResponse(message, token) {
   return {
     meta: {
@@ -63,8 +86,8 @@ function tokenResponse(message, token) {
     data: {
       access_token: token,
       token_type: "Bearer",
-      expires_in: 3600
-    }
+      expires_in: 3600,
+    },
   };
 }
 
@@ -75,10 +98,9 @@ function invalidTokenResponse(message) {
       status: "Unauthorized",
       message: message,
     },
-    data: null
+    data: null,
   };
 }
-
 
 module.exports = {
   successResponse,
@@ -87,5 +109,7 @@ module.exports = {
   invalidResponse,
   createResponse,
   tokenResponse,
-  invalidTokenResponse
+  invalidTokenResponse,
+  notFoundResponse,
+  noContentResponse,
 };
