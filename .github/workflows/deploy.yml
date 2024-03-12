@@ -2,7 +2,7 @@ name: 🚀 Deploy API MKID
 on:
   push:
     branches:
-      - stagging
+      - development
 jobs:
   web-deploy:
     name: 🎉 Deploy
