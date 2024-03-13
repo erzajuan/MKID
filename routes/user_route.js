@@ -9,6 +9,7 @@ userRoute.post("/auth/register/", multerUser, userController.register);
 userRoute.post("/auth/login/", userController.login);
 
 userRoute.put("/auth/update/", checkToken, multerUser, userController.update);
+userRoute.get("/auth/profile", checkToken, userController.detailUser);
 
 //Check Token
 userRoute.get("/auth/check", checkToken, userController.check);

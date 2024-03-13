@@ -11,6 +11,7 @@ const {
   notFoundResponse,
 } = require("../services/response");
 const { generateToken } = require("../services/auth");
+const { userResource } = require("../resources/users_resources");
 
 class userController {
   static async getUsers(req, res) {
@@ -63,7 +64,7 @@ class userController {
             password,
             img_profile,
           });
-          res.status(201).json(createResponse("Registrasi Berhasil", data));
+          res.status(201).json(createResponse("Registrasi Berhasil", userResource(data)));
         } else {
           res.status(400).json(invalidResponse("Phone number tidak valid!"));
         }
@@ -198,6 +199,18 @@ class userController {
           res.status(400).json(invalidResponse("Invalid phone number"));
         }
       }
+    } catch (error) {
+      res.status(500).json(errorResponse("Internal Server Error : " + error));
+    }
+  }
+
+  static async detailUser(req, res) {
+    try {
+      const { id } = req.userData;
+      let data = await user.findByPk(id);
+      data == null
+        ? res.status(404).json(notFoundResponse("Data not found"))
+        : res.status(200).json(successResponse("Successfully get profile", userResource(data)));
     } catch (error) {
       res.status(500).json(errorResponse("Internal Server Error : " + error));
     }
