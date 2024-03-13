@@ -101,7 +101,7 @@ class userController {
               .status(200)
               .json(tokenResponse("Login Successful", access_token));
           } else {
-            res.status(400).json(invalidResponse("Invalid Password"));
+            res.status(400).json(invalidTokenResponse("Invalid Password"));
           }
         } else {
           res.status(400).json(invalidResponse("Username/Email Tidak Sesuai!"));

@@ -2,7 +2,7 @@ name: 🚀 Deploy API MKID
 on:
   push:
     branches:
-      - stagging
+      - development
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -12,6 +12,14 @@ jobs:
       uses: actions/checkout@v2
     - name: Install Dependencies Node
       run: npm install
+    - name: 📂 Check if assets folder exists
+      run: |
+        if [ ! -d "assets" ]; then
+          mkdir assets
+          echo "Created assets folder"
+        else
+          echo "Assets folder already exists"
+        fi
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.2.0
       with:
