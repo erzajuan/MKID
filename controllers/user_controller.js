@@ -16,7 +16,9 @@ const { userResource } = require("../resources/users_resources");
 class userController {
   static async getUsers(req, res) {
     try {
-      let data = await user.findAll();
+      let data = await user.findAll({
+        attributes: {exclude: ["password"]}
+      });
       data == null
         ? res.status(204).json(successResponse("Data is empty", data))
         : res.status(200).json(successResponse("Successfully fetched", data));
