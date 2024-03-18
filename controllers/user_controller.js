@@ -1,4 +1,4 @@
-const { decrypt } = require("../services/bcrypt");
+const { decrypt, encrypt } = require("../services/bcrypt");
 const { user } = require("../models");
 const {
   successResponse,
@@ -17,7 +17,7 @@ class userController {
   static async getUsers(req, res) {
     try {
       let data = await user.findAll({
-        attributes: {exclude: ["password"]}
+        attributes: { exclude: ["password"] },
       });
       data == null
         ? res.status(204).json(successResponse("Data is empty", data))
@@ -66,7 +66,9 @@ class userController {
             password,
             img_profile,
           });
-          res.status(201).json(createResponse("Registrasi Berhasil", userResource(data)));
+          res
+            .status(201)
+            .json(createResponse("Registrasi Berhasil", userResource(data)));
         } else {
           res.status(400).json(invalidResponse("Phone number tidak valid!"));
         }
@@ -117,7 +119,7 @@ class userController {
 
   static async check(req, res) {
     try {
-      res.status(200).json(tokenResponse("Berhasil", req.userData));
+      res.status(200).json(tokenResponse("Successful Token", req.userData));
     } catch (error) {
       res.status(500).json(errorResponse("Internal Server Error : " + error));
     }
@@ -212,7 +214,54 @@ class userController {
       let data = await user.findByPk(id);
       data == null
         ? res.status(404).json(notFoundResponse("Data not found"))
-        : res.status(200).json(successResponse("Successfully get profile", userResource(data)));
+        : res
+            .status(200)
+            .json(
+              successResponse("Successfully get profile", userResource(data))
+            );
+    } catch (error) {
+      res.status(500).json(errorResponse("Internal Server Error : " + error));
+    }
+  }
+
+  static async changePassword(req, res) {
+    try {
+      const id = +req.userData.id;
+      const { old_password, new_password, confirm_password } = req.body;
+      const data = await user.findByPk(id);
+
+      if (decrypt(old_password, data.password)) {
+        if (new_password == confirm_password) {
+          if (new_password == old_password) {
+            res
+              .status(400)
+              .json(
+                invalidResponse(
+                  "New password must be different from old password"
+                )
+              );
+          } else {
+            await user.update(
+              {
+                password: encrypt(new_password),
+              },
+              { where: { id } }
+            );
+            res
+              .status(200)
+              .json(
+                successResponse(
+                  "Successfully change password",
+                  userResource(data)
+                )
+              );
+          }
+        } else {
+          res.status(400).json(invalidResponse("New Password does not match"));
+        }
+      } else {
+        res.status(400).json(invalidResponse("Invalid Password"));
+      }
     } catch (error) {
       res.status(500).json(errorResponse("Internal Server Error : " + error));
     }
