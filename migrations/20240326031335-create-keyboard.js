@@ -30,7 +30,7 @@ module.exports = {
       dimensions: {
         type: Sequelize.STRING
       },
-      wight: {
+      weight: {
         type: Sequelize.STRING
       },
       cable_type: {
